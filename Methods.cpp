@@ -1,7 +1,7 @@
-	// описание методов
+	// РѕРїРёСЃР°РЅРёРµ РјРµС‚РѕРґРѕРІ
 	#ifndef METHODS_H_
 	#define METHODS_H_
-	void magical_shop::effect(int number_potion) // метод выбора зелья
+	void magical_shop::effect(int number_potion) // РјРµС‚РѕРґ РІС‹Р±РѕСЂР° Р·РµР»СЊСЏ
 		{
 			if (number_potion == 0)
 				{
@@ -43,7 +43,7 @@
 						}while (choise == 'y');
 				}
 		}
-	void magical_shop::stock(double discount) // метод скидок
+	void magical_shop::stock(double discount) // РјРµС‚РѕРґ СЃРєРёРґРѕРє
 		{
 			cout << "How many time do you come to us?\n";
 			int number_visit;
