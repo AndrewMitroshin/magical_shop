@@ -1,16 +1,16 @@
-	// описание конструкторов
+	// РѕРїРёСЃР°РЅРёРµ РєРѕРЅСЃС‚СЂСѓС‚РѕСЂРѕРІ
 	#ifndef CONSTRUCTORS_H_
 	#define CONSTRUCTORS_H_
-	magical_shop::magical_shop(int money) // конструктор количества денег покупателя с использованием this
+	magical_shop::magical_shop(int money) // РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕР»РёС‡РµСЃС‚РІР° РґРµРЅРµРі РїРѕРєСѓРїР°С‚РµР»СЏ СЃ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµРј this
 		{
 			this -> money = money;
 			cout << ", you have " << money << " silver\n";
 		} 
-	magical_shop::magical_shop(double cooldown, string period) // конструктор времени повторного использования зелья
+	magical_shop::magical_shop(double cooldown, string period) // РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РІСЂРµРјРµРЅРё РїРѕРІС‚РѕСЂРЅРѕРіРѕ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ Р·РµР»СЊСЏ
 		{
 			cout << "Coldown " << cooldown << ' ' << period << endl;
 		}
-	magical_shop::magical_shop(int sph, int spm, int mph, int mpm, int gph, int gpm) // конструктор цены зелий
+	magical_shop::magical_shop(int sph, int spm, int mph, int mpm, int gph, int gpm) // РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ С†РµРЅС‹ Р·РµР»РёР№
 		{
 			cout << "\t\t\t\tPotion HP\t\tPotion MP\nSmall potion value|\t\t" << sph 
 			<< " silver\t\t" << spm << " silver\nMain potion value |\t\t" << mph << " silver\t\t" << mpm 
