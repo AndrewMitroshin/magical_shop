@@ -1,6 +1,6 @@
 #include <iostream>
 using namespace std;
-class abstract{ //абстрактный класс
+class abstract{ //Р°Р±СЃС‚СЂР°РєС‚РЅС‹Р№ РєР»Р°СЃСЃ
 	protected:
 		double first;
 	public:
@@ -8,11 +8,11 @@ class abstract{ //абстрактный класс
 			{
 				this -> first = first;
 			}
-		virtual double profit() = 0; // определение чисто виртуальной функции
+		virtual double profit() = 0; // РѕРїСЂРµРґРµР»РµРЅРёРµ С‡РёСЃС‚Рѕ РІРёСЂС‚СѓР°Р»СЊРЅРѕР№ С„СѓРЅРєС†РёРё
 };
 class product : public abstract{
 	public:
-		double profit () // переопределение виртуальной функции
+		double profit () // РїРµСЂРµРѕРїСЂРµРґРµР»РµРЅРёРµ РІРёСЂС‚СѓР°Р»СЊРЅРѕР№ С„СѓРЅРєС†РёРё
 			{
 				return (first/100);
 			}
