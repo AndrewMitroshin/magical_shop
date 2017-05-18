@@ -1,11 +1,11 @@
 	// —оздание класса - лавка с зель€ми
 	#ifndef CLASS_H_
 	#define CLASS_H_
-	class magical_shop
-		{
+	class magical_shop{
 			private:
 				int money;
 				static const int POTION_SIZE = 3; // объ€вление статического компонента - константного значени€
+				int number_of_sellers;
 			public:
 				magical_shop (int money); // объ€вление конструктора - количества денег покупател€
 				magical_shop (double cooldown, string period); // объ€вление конструктора - времени повторного использовани€ зель€
@@ -22,7 +22,36 @@
 				void effect(int number_potion); // объ€вление метода выбора зель€
 				void stock(double discount); // объ€вление метода скидок
 				friend void no_money (const magical_shop &name); // объ€вление дужественной функции
+				
+				
+				virtual void shop_sellers() // виртуальный метод
+					{
+						cout << "In the magical shop now works " << number_of_sellers << " sellers\n";
+					}
+				class color_shop{ //вложенный класс
+					public:
+						color_shop(string color)
+							{
+								cout << "Color you shop - is " << color << endl;
+							}
+					};
 		};
+	class flying_shop : public magical_shop{ // наследник класса magical_shop
+		 private:
+		 	bool open_close;
+			static const int number_of_sellers = 4;
+		 public:
+		 	flying_shop (int sph, int spm, int mph, int mpm, int gph, int gpm) : magical_shop(sph, spm, mph, mpm, gph, gpm)// конструктор класса magical_shop
+		 		{
+		 			open_close = 1;
+		 		}
+		 	void shop_sellers() //переопределенный виртуальный метод
+		 		{
+		 			cout << "In the flying shop now works " << number_of_sellers << " sellers\n";
+		 		}
+};
+
+
 	void no_money (const magical_shop &name) //инициализаци€ дружественной функции
 		{
 			cout << "\nYou have " << name.money << " silver left\n";
