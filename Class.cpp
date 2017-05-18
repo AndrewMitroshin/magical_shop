@@ -1,34 +1,34 @@
-	// Создание класса - лавка с зельями
+	// РЎРѕР·РґР°РЅРёРµ РєР»Р°СЃСЃР° - Р»Р°РІРєР° СЃ Р·РµР»СЊСЏРјРё
 	#ifndef CLASS_H_
 	#define CLASS_H_
 	class magical_shop{
 			private:
 				int money;
-				static const int POTION_SIZE = 3; // объявление статического компонента - константного значения
+				static const int POTION_SIZE = 3; // РѕР±СЉСЏРІР»РµРЅРёРµ СЃС‚Р°С‚РёС‡РµСЃРєРѕРіРѕ РєРѕРјРїРѕРЅРµРЅС‚Р° - РєРѕРЅСЃС‚Р°РЅС‚РЅРѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ
 				int number_of_sellers;
 			public:
-				magical_shop (int money); // объявление конструктора - количества денег покупателя
-				magical_shop (double cooldown, string period); // объявление конструктора - времени повторного использования зелья
-				magical_shop (int sph, int spm, int mph, int mpm, int gph, int gpm); // объявление конструктора - цены зелий
-				magical_shop() // объявление конструктора по-умолчанию
+				magical_shop (int money); // РѕР±СЉСЏРІР»РµРЅРёРµ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР° - РєРѕР»РёС‡РµСЃС‚РІР° РґРµРЅРµРі РїРѕРєСѓРїР°С‚РµР»СЏ
+				magical_shop (double cooldown, string period); // РѕР±СЉСЏРІР»РµРЅРёРµ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР° - РІСЂРµРјРµРЅРё РїРѕРІС‚РѕСЂРЅРѕРіРѕ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ Р·РµР»СЊСЏ
+				magical_shop (int sph, int spm, int mph, int mpm, int gph, int gpm); // РѕР±СЉСЏРІР»РµРЅРёРµ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР° - С†РµРЅС‹ Р·РµР»РёР№
+				magical_shop() // РѕР±СЉСЏРІР»РµРЅРёРµ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР° РїРѕ-СѓРјРѕР»С‡Р°РЅРёСЋ
 					{
 						money = 0;
 					}
-				~magical_shop() // объявление деструктора
+				~magical_shop() // РѕР±СЉСЏРІР»РµРЅРёРµ РґРµСЃС‚СЂСѓРєС‚РѕСЂР°
 					{
 						cout << "\nDestructor was used here\n";
 					}
-				static const string customer_name[]; // объявление статического компонента - имен покупателей
-				void effect(int number_potion); // объявление метода выбора зелья
-				void stock(double discount); // объявление метода скидок
-				friend void no_money (const magical_shop &name); // объявление дужественной функции
+				static const string customer_name[]; // РѕР±СЉСЏРІР»РµРЅРёРµ СЃС‚Р°С‚РёС‡РµСЃРєРѕРіРѕ РєРѕРјРїРѕРЅРµРЅС‚Р° - РёРјРµРЅ РїРѕРєСѓРїР°С‚РµР»РµР№
+				void effect(int number_potion); // РѕР±СЉСЏРІР»РµРЅРёРµ РјРµС‚РѕРґР° РІС‹Р±РѕСЂР° Р·РµР»СЊСЏ
+				void stock(double discount); // РѕР±СЉСЏРІР»РµРЅРёРµ РјРµС‚РѕРґР° СЃРєРёРґРѕРє
+				friend void no_money (const magical_shop &name); // РѕР±СЉСЏРІР»РµРЅРёРµ РґСѓР¶РµСЃС‚РІРµРЅРЅРѕР№ С„СѓРЅРєС†РёРё
 				
 				
-				virtual void shop_sellers() // виртуальный метод
+				virtual void shop_sellers() // РІРёСЂС‚СѓР°Р»СЊРЅС‹Р№ РјРµС‚РѕРґ
 					{
 						cout << "In the magical shop now works " << number_of_sellers << " sellers\n";
 					}
-				class color_shop{ //вложенный класс
+				class color_shop{ //РІР»РѕР¶РµРЅРЅС‹Р№ РєР»Р°СЃСЃ
 					public:
 						color_shop(string color)
 							{
@@ -36,26 +36,26 @@
 							}
 					};
 		};
-	class flying_shop : public magical_shop{ // наследник класса magical_shop
+	class flying_shop : public magical_shop{ // РЅР°СЃР»РµРґРЅРёРє РєР»Р°СЃСЃР° magical_shop
 		 private:
 		 	bool open_close;
 			static const int number_of_sellers = 4;
 		 public:
-		 	flying_shop (int sph, int spm, int mph, int mpm, int gph, int gpm) : magical_shop(sph, spm, mph, mpm, gph, gpm)// конструктор класса magical_shop
+		 	flying_shop (int sph, int spm, int mph, int mpm, int gph, int gpm) : magical_shop(sph, spm, mph, mpm, gph, gpm)/magical_shop(sph, spm, mph, mpm, gph, gpm)// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР° magical_shop
 		 		{
 		 			open_close = 1;
 		 		}
-		 	void shop_sellers() //переопределенный виртуальный метод
+		 	void shop_sellers() //РїРµСЂРµРѕРїСЂРµРґРµР»РµРЅРЅС‹Р№ РІРёСЂС‚СѓР°Р»СЊРЅС‹Р№ РјРµС‚РѕРґ
 		 		{
 		 			cout << "In the flying shop now works " << number_of_sellers << " sellers\n";
 		 		}
 };
 
 
-	void no_money (const magical_shop &name) //инициализация дружественной функции
+	void no_money (const magical_shop &name) //РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РґСЂСѓР¶РµСЃС‚РІРµРЅРЅРѕР№ С„СѓРЅРєС†РёРё
 		{
 			cout << "\nYou have " << name.money << " silver left\n";
 		}
 	const string magical_shop::customer_name[POTION_SIZE] = {"Andrew", "Anthony", "Sergey"}; 
-	//инициализация статического компонента - имен покупателей
+	//РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ СЃС‚Р°С‚РёС‡РµСЃРєРѕРіРѕ РєРѕРјРїРѕРЅРµРЅС‚Р° - РёРјРµРЅ РїРѕРєСѓРїР°С‚РµР»РµР№
 	#endif
