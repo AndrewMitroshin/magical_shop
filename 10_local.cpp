@@ -4,7 +4,7 @@ const int quantity_of_goods = 40;
 void shop()
 	{
 	cout<<"Shop is have " << ::quantity_of_goods << " goods";
-	class local{ //ëîêàëüíûé êëàññ
+	class local{ //Ð»Ð¾ÐºÐ°Ð»ÑŒÐ½Ñ‹Ð¹ ÐºÐ»Ð°ÑÑ
 			private:
 				int first_sell;
 			public:
