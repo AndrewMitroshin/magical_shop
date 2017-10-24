@@ -1,10 +1,9 @@
 #include <iostream>
 using namespace std;
 const int SIZE = 100;
-int fSet[SIZE];
-int sSet[SIZE];
-int choice_add1=0;
-int choice_add2=0;
+int fSet[SIZE], sSet[SIZE];
+int choice_add1=0, choice_add2=0;
+int choice_delete1=0, choice_delete2=0;
 string choice;
 template <typename T, typename U>
 class Set{
@@ -14,7 +13,7 @@ class Set{
 	public:
 		void add(T a, T b)
 			{
-				cout << "\nIf you want add/delete elem, enter 'add', else enter any lenght:\n";
+				cout << "\nIf you want add/delete elem, enter 'add'/'del', else enter any lenght:\n";
 				cin >> choice;
 				if (choice=="add")
 					{
@@ -23,35 +22,99 @@ class Set{
 						cout << "Second set, how many elements you are want enter?\n";
 						cin >> choice_add2;
 					}
-				bool s=false;
+				if (choice == "del")
+					{
+						cout << "First set, how many elements you are want enter?\n";
+						cin >> choice_delete1;
+						cout << "Second set, how many elements you are want enter?\n";
+						cin >> choice_delete2;
+					};
 				a_Set = a;
 				b_Set = b;
 				cout << "Enter first set: \n";
-				for (int i=0; i<a+choice_add1; i++) // вводим элементы первого множества
+				if (choice =="add")
 					{
-						cin >> fSet[i];
+						for (int i=0; i<a+choice_add1; i++) // вводим элементы первого множества
+							{
+								cin >> fSet[i];
+							}
+						cout << "\nEnter second set: \n";
+						for (int i=0; i<b+choice_add2; i++) // вводим элементы второго множества
+							{
+								cin >> sSet[i];
+							}							
 					}
-				cout << "\nEnter second set: \n";
-				for (int i=0; i<b+choice_add2; i++) // вводим элементы второго множества
+				else if (choice == "del")
 					{
-						cin >> sSet[i];
-					}		
+						for (int i=0; i<a-choice_delete1; i++) // вводим элементы первого множества
+							{
+								cin >> fSet[i];
+							}
+						cout << "\nEnter second set: \n";
+						for (int i=0; i<b-choice_delete2; i++) // вводим элементы второго множества
+							{
+								cin >> sSet[i];
+							}
+					}
+				else
+					{
+						for (int i=0; i<a; i++) // вводим элементы первого множества
+							{
+								cin >> fSet[i];
+							}
+						cout << "\nEnter second set: \n";
+						for (int i=0; i<b; i++) // вводим элементы второго множества
+							{
+								cin >> sSet[i];
+							}			
+					}
 			}
 		void Show(T const &a, T const &b)
 			{
 				a_Set = a;
 				b_Set = b;
 				cout << "\nFirst Set:\n{";
-				for (int i=0; i<a+choice_add1; i++) // выводим элементы первого множества
+				if (choice == "add")
 					{
-						if (i==a+choice_add1-1) cout << fSet[i];
-						else cout << fSet[i] << ", ";
+						for (int i=0; i<a+choice_add1; i++) // выводим элементы первого множества
+							{
+								if (i==a+choice_add1-1) cout << fSet[i];
+								else cout << fSet[i] << ", ";
+							}
+						cout << "}\nSecond Set:\n{";
+						for (int i=0; i<b+choice_add2; i++) // выводим элементы второго множества
+							{
+								if (i==b+choice_add2-1) cout << sSet[i];
+								else cout << sSet[i] << ", ";
+							}
 					}
-				cout << "}\nSecond Set:\n{";
-				for (int i=0; i<b+choice_add2; i++) // выводим элементы второго множества
+				else if (choice == "del")
 					{
-						if (i==b+choice_add2-1) cout << sSet[i];
-						else cout << sSet[i] << ", ";
+						for (int i=0; i<a-choice_delete1; i++) // выводим элементы первого множества
+							{
+								if (i==a-choice_delete1-1) cout << fSet[i];
+								else cout << fSet[i] << ", ";
+							}
+						cout << "}\nSecond Set:\n{";
+						for (int i=0; i<b-choice_delete2; i++) // выводим элементы второго множества
+							{
+								if (i==b-choice_delete2-1) cout << sSet[i];
+								else cout << sSet[i] << ", ";
+							}
+					}
+				else 				
+					{
+						for (int i=0; i<a; i++) // выводим элементы первого множества
+							{
+								if (i==a-1) cout << fSet[i];
+								else cout << fSet[i] << ", ";
+							}
+						cout << "}\nSecond Set:\n{";
+						for (int i=0; i<b; i++) // выводим элементы второго множества
+							{
+								if (i==b-1) cout << sSet[i];
+								else cout << sSet[i] << ", ";
+							}
 					}
 				cout << "}\n";					
 			}
@@ -59,21 +122,50 @@ class Set{
 			{
 				a_Set = a;
 				b_Set = b;
-				for (int i=0; i<a+choice_add1; i++)
+				if (choice == "add")
 					{
-						for (int j=0; j<b+choice_add2; j++)
+						for (int i=0; i<a+choice_add1; i++)
 							{
-								if (fSet[i]==sSet[j]) i++;
-							}
-						if (i==a+choice_add1) cout << endl;
-						else cout << fSet[i] << ' ';
+								for (int j=0; j<b+choice_add2; j++)
+									{
+										if (fSet[i]==sSet[j]) i++;
+									}
+								if (i==a+choice_add1) cout << endl;
+								else cout << fSet[i] << ' ';
 
+							}
+					}
+				else if (choice == "del")
+					{
+						for (int i=0; i<a-choice_delete1; i++)
+							{
+								for (int j=0; j<b-choice_delete2; j++)
+									{
+										if (fSet[i]==sSet[j]) i++;
+									}
+								if (i==a-choice_delete1) cout << endl;
+								else cout << fSet[i] << ' ';
+							}
+					}
+				else
+					{
+						for (int i=0; i<a; i++)
+							{
+								for (int j=0; j<b; j++)
+									{
+										if (fSet[i]==sSet[j]) i++;
+									}
+								if (i==a) cout << endl;
+								else cout << fSet[i] << ' ';
+							}		
 					}
 			}
 		void Union(T const &a, T const &b) // объединение множеств
 			{
 				a_Set = a;
 				b_Set = b;
+				if (choice == "add"){
+
 				for (int i=0; i<a+choice_add1; i++)
 					{
 						cout << fSet[i] << ' ';
@@ -89,11 +181,49 @@ class Set{
 									}
 							}
 					}
+				}
+				else if (choice == "del")
+					{
+					for (int i=0; i<a-choice_delete1; i++)
+					{
+						cout << fSet[i] << ' ';
+						if (i==a-choice_delete1-1)
+							{
+								for (int j=0; j<b-choice_delete2; j++)
+									{		
+										for (i=0; i<a-choice_delete1; i++)
+											{
+												if (fSet[i]==sSet[j]) j++;												
+											}
+										cout << sSet[j] << ' ';
+									}
+							}
+					}
+					}
+				else
+					{
+					for (int i=0; i<a-choice_delete1; i++)
+						{
+							cout << fSet[i] << ' ';
+							if (i==a-1)
+								{
+									for (int j=0; j<b; j++)
+										{		
+											for (i=0; i<a; i++)
+												{
+													if (fSet[i]==sSet[j]) j++;												
+												}
+											cout << sSet[j] << ' ';
+										}
+								}
+						}	
+					}
 			}
 		void intersection(T const &a, T const &b) // пересечение множеств
 			{
 				a_Set = a;
 				b_Set = b;
+				if (choice == "add"){
 				for (int i=0; i<a+choice_add1; i++)
 					{
 						for (int j=0; j<b+choice_add2; j++)
@@ -101,21 +231,50 @@ class Set{
 								if (fSet[i]==sSet[j]) cout << fSet[i] << ' ';
 							}
 					}
+				}
+				else if (choice == "del")
+					{
+						for (int i=0; i<a-choice_delete1; i++)
+							{
+								for (int j=0; j<b-choice_delete2; j++)
+									{
+										if (fSet[i]==sSet[j]) cout << fSet[i] << ' ';
+									}
+							}
+					}
+				else
+					{
+						for (int i=0; i<a; i++)
+							{
+								for (int j=0; j<b; j++)
+									{
+										if (fSet[i]==sSet[j]) cout << fSet[i] << ' ';
+									}
+							}
+					}
 			}
 };
 int main()
 	{
-		Set<char, int> one;
-		one.add(3, 4);
-		one.Show(3, 4);
+		Set<int, int> one;
+		int A, B;
+		cout << "\nEnter size first set:";
+		cin >> A;
+		cout << "\nEnter size second set:";
+		cin >> B;
+		
+		one.add(A, B); // добавление элементов
+		one.Show(A, B); // вывод на экран
+		
 		cout << "\nDifference:\n";// разность множеств
-		one.difference(3, 4);
+		one.difference(A, B);
 		
 		cout << "\nUnion:\n";// объединение множеств
-		one.Union(3,4);
+		one.Union(A, B);
 		
 		cout << "\n\nIntersection:\n"; // пересечение множеств
-		one.intersection(3,4);
+		one.intersection(A, B);
 
 		return 0;
 	}
+
