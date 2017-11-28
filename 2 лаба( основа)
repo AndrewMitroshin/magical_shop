@@ -1,0 +1,396 @@
+#include <iostream>
+#include <cstring>
+#include <vector>
+#include <fstream>
+using namespace std;
+int SIZE_LOG = 3; //  количество строк в журнале
+const int SIZE = 100;
+struct ID{
+	int call_id;
+	ID(int call_id)
+		{
+			this -> call_id = call_id;
+		}
+	void Show() 
+		{
+			printf("%d\t ", call_id);	
+		}
+};
+struct Date{	
+	int day, month, year;
+	Date(int day, int month, int year)
+		{
+			this -> day = day;
+			this -> month = month;
+			this -> year = year;
+		}
+	void Show()
+		{
+			printf("%d.%d.%d\t",day, month, year);
+		}	
+};
+struct Time{	
+	int hours, minutes;
+	Time(int hours, int minutes)
+		{
+			this -> hours = hours;
+			this -> minutes = minutes;				
+		}
+	void Show()
+		{	
+			if (minutes <10) printf("%d:0%d\n", hours, minutes);
+			else printf("%d:%d\n", hours, minutes);
+		}		
+};
+void topic() // метод вывода заголовка
+	{
+		printf("\nID\t From\t To\tDate\t\tTime\n");
+	}
+int main()
+{
+	vector <ID> id;
+	vector <Date> date, find_date;
+	vector <Time> time;	
+	
+	int f=0, rem; 
+
+	string choice;
+	int choice_add, new_SIZE_LOG=SIZE_LOG;
+	bool WHILE = false;		
+	do 
+		{
+			int p=0, g=0, z=0, h;
+			if (f == 0)
+				{
+					printf("Enter something next, if you want see:\n\n*original log,\t\t\t\t 'log'\n*log, sort on date(ascending),\t\t 'date_asc'\n");
+					printf("*log, sort on date(descendingly),\t 'date_desc'\n*log, sort on time(ascending),\t\t 'time_asc'\n");
+					printf("*log, sort on time(descendingly),\t 'time_desc'\n*calls of user,\t\t\t\t 'call_user'\n");
+					printf("*calls from date and to date,\t\t 'date'\n*add call,\t\t\t\t 'add'\n*remove call,\t\t\t\t 'remove'\n*else enter any lenght\n\n");
+					f++;
+				}
+			ifstream in("input.txt");	
+			ifstream in_1("input2.txt");		
+			cin >> choice;
+								
+			SIZE_LOG = new_SIZE_LOG;
+			
+			string From[SIZE_LOG], To[SIZE_LOG];
+				
+			for (int i=0; i<SIZE_LOG; i++)
+				{	
+					if (choice == "remove") // удаление вектора
+						{					
+							if (i==0)
+								{
+									printf("Enter ID, that need removed:\n");
+									cin >> rem;
+									new_SIZE_LOG = SIZE_LOG -1;										
+								}
+							if (rem-1==i)
+								{
+									id.erase(id.begin()+i);
+									date.erase(date.begin()+i);
+									time.erase(time.begin()+i);	
+								}
+							else if (rem>SIZE_LOG && g==0)
+								{
+									printf ("Wrong ID\n");
+									g++;
+								}
+							h=1;						
+						};
+					if (p==0)
+						{
+							if (h==1)
+								{
+									for (int l=0; l<SIZE_LOG-1; l++)
+										{
+											in_1 >> From[l];
+											in_1 >> To[l];								
+										}					
+								};
+							for (int l=0; l<SIZE_LOG; l++)
+								{
+									in_1 >> From[l];
+									in_1 >> To[l];								
+								}									
+							p++;
+						};	
+					int call_id;
+					int day, month, year;
+					int hours, minutes;
+					
+					if(z==0) // заполняем вектора
+						{
+							if (h==1)
+								{
+									for (int l=0; l<SIZE_LOG+1; l++)
+										{
+											in >> call_id;
+											in >> day >> month >>year;
+											in >> hours >> minutes;
+											
+											id.push_back(ID(call_id));
+											date.push_back(Date(day, month, year));
+											time.push_back(Time(hours, minutes));				
+										}
+								};
+							for (int l=0; l<SIZE_LOG; l++)
+								{
+									in >> call_id;
+									in >> day >> month >>year;
+									in >> hours >> minutes;
+									
+									id.push_back(ID(call_id));
+									date.push_back(Date(day, month, year));
+									time.push_back(Time(hours, minutes));				
+								}
+							z++;
+						}
+
+					
+					if (choice == "log") // вывод журнала
+						{	
+							if(i==0) topic();
+							id[i].Show();
+							
+							if (rem-1==i && i<SIZE_LOG-1) rem++;
+							
+							cout << From[i] << "\t ";
+							cout << To[i] << "\t ";										
+							date[i].Show();
+							time[i].Show();
+						}			
+					else if (choice == "add") // добавление нового звонка
+						{
+							if (i==0) 
+								{
+									printf ("How many calls do you want to add?\n");
+									cin >> choice_add;
+								};	
+							if (choice_add < 2) 		
+								{
+									new_SIZE_LOG = SIZE_LOG + choice_add;
+									id.clear();
+									date.clear();
+									time.clear();									
+								}
+						}
+					else if (choice == "date_asc") // отобажение журнала по возрастанию даты
+						{
+							if(i==0) topic();
+							for (int j=1; j<SIZE_LOG; j++)
+								{
+									for (int k=0; k<SIZE_LOG-1; k++)
+										{
+											if (date[j].year < date[k].year) 
+												{
+													swap (id[j], id[k]);
+													swap (From[j], From[k]);
+													swap (To[j], To[k]);
+													swap (date[j], date[k]);
+													swap (time[j], time[k]);
+												}
+											else if ((date[j].year == date[k].year) && (date[j].month < date[k].month))
+												{
+													swap (id[j], id[k]);
+													swap (From[j], From[k]);
+													swap (To[j], To[k]);
+													swap (date[j], date[k]);
+													swap (time[j], time[k]);
+												}
+											else if ((date[j].year == date[k].year) && (date[j].month == date[k].month) && (date[j].day < date[k].day))
+												{
+													swap (id[j], id[k]);
+													swap (From[j], From[k]);
+													swap (To[j], To[k]);				
+													swap (date[j], date[k]);
+													swap (time[j], time[k]);
+												}											
+										}
+								}
+							id[i].Show();
+							cout << From[i] << "\t ";
+							cout << To[i] << "\t ";
+							date[i].Show();	
+							time[i].Show();
+						}
+					else if (choice == "date_desc") // отображение журнала по убыванию даты
+						{
+							if(i==0) topic();
+							for (int j=1; j<SIZE_LOG; j++)
+								{
+									for (int k=0; k<SIZE_LOG-1; k++)
+										{
+											if (date[j].year > date[k].year) 
+												{
+													swap (id[j], id[k]);
+													swap (From[j], From[k]);
+													swap (To[j], To[k]);
+													swap (date[j], date[k]);
+													swap (time[j], time[k]);
+												}
+											else if ((date[j].year == date[k].year) && (date[j].month > date[k].month))
+												{
+													swap (id[j], id[k]);
+													swap (From[j], From[k]);
+													swap (To[j], To[k]);
+													swap (date[j], date[k]);
+													swap (time[j], time[k]);
+												}
+											else if ((date[j].year == date[k].year) && (date[j].month == date[k].month) && (date[j].day > date[k].day))
+												{
+													swap (id[j], id[k]);
+													swap (From[j], From[k]);
+													swap (To[j], To[k]);				
+													swap (date[j], date[k]);
+													swap (time[j], time[k]);
+												}											
+										}
+								}
+							id[i].Show();
+							cout << From[i] << "\t ";
+							cout << To[i] << "\t ";
+							date[i].Show();	
+							time[i].Show();
+						}
+					else if (choice == "time_asc") // отображение журнала по возрастанию времени
+						{
+							if(i==0) topic();
+							for (int j=1; j<SIZE_LOG; j++)
+								{
+									for (int k=0; k<SIZE_LOG; k++)
+										{
+											if (time[j].hours < time[k].hours) 
+												{
+													swap (id[j], id[k]);
+													swap (From[j], From[k]);
+													swap (To[j], To[k]);				
+													swap (date[j], date[k]);
+													swap (time[j], time[k]);
+												}
+											else if ((time[j].hours == time[k].hours) && (time[j].minutes < time[k].minutes))
+												{
+													swap (id[j], id[k]);
+													swap (From[j], From[k]);
+													swap (To[j], To[k]);				
+													swap (date[j], date[k]);
+													swap (time[j], time[k]);
+												}							
+										}
+								}
+							id[i].Show();
+							cout << From[i] << "\t ";
+							cout << To[i] << "\t ";
+							date[i].Show();	
+							time[i].Show();	
+						}
+					else if (choice == "time_desc") // отображение журнала по убыванию времени
+						{
+							if(i==0) topic();
+							for (int j=1; j<SIZE_LOG; j++)
+								{
+									for (int k=0; k<SIZE_LOG-1; k++)
+										{
+											if (time[j].hours > time[k].hours) 
+												{
+													swap (id[j], id[k]);
+													swap (From[j], From[k]);
+													swap (To[j], To[k]);				
+													swap (date[j], date[k]);
+													swap (time[j], time[k]);
+												}
+											else if ((time[j].hours == time[k].hours) && (time[j].minutes > time[k].minutes))
+												{
+													swap (id[j], id[k]);
+													swap (From[j], From[k]);
+													swap (To[j], To[k]);				
+													swap (date[j], date[k]);
+													swap (time[j], time[k]);
+												}							
+										}
+								}
+							id[i].Show();
+							cout << From[i] << "\t ";
+							cout << To[i] << "\t ";
+							date[i].Show();	
+							time[i].Show();
+						}
+					else if (choice == "call_user") //  вывод звонков пользователя 
+						{
+							i = SIZE_LOG-1;
+							printf ("\nWhose calls do you want to know? ");
+							string choice_user;
+							cin >> choice_user;
+							for (int l=0; l<SIZE_LOG; l++)
+								{
+									if (choice_user == From[l])
+										{
+											id[l].Show();
+											cout << From[l] << "\t ";
+											cout << To[l] << "\t ";
+											date[l].Show();	
+											time[l].Show();
+										}
+								}
+						}
+					else if (choice == "date") // вывод журнала от даты и до даты
+						{
+							for (int l=0; l<2; l++)
+								{
+									if (l==0)
+										{
+											printf ("\nEnter first date, without point(day, month, year):\n");
+											cin >> day >> month >> year;
+											find_date.push_back(Date(day, month, year));
+										}
+									else
+										{
+											printf ("\nEnter second date, without point(day, month, year):\n");
+											cin >> day >> month >> year;
+											find_date.push_back(Date(day, month, year));
+										}
+								}		
+							for (int l=0; l<SIZE_LOG; l++) 
+								{
+
+									if (date[l].year > find_date[0].year && date[l].year < find_date[1].year)
+										{
+											if(i==0) topic();
+											id[l].Show();
+											cout << From[l] << "\t ";
+											cout << To[l] << "\t ";
+											date[l].Show();	
+											time[l].Show();	
+										}
+									else if ((date[l].year == find_date[0].year && date[l].year == find_date[1].year) && (date[l].month > find_date[0].month && date[l].month < find_date[1].month))
+										{
+											if(i==0) topic();
+											id[l].Show();
+											cout << From[l] << "\t ";
+											cout << To[l] << "\t ";
+											date[l].Show();	
+											time[l].Show();	
+										}
+									else if (((date[l].year == find_date[0].year && date[l].year == find_date[1].year) && (date[l].month == find_date[0].month && date[l].month == find_date[1].month)) && (date[l].day >= find_date[0].day && date[l].day <= find_date[1].day))
+										{
+											if(i==0) topic();
+											id[l].Show();
+											cout << From[l] << "\t ";
+											cout << To[l] << "\t ";
+											date[l].Show();	
+											time[l].Show();	
+										}
+									i = SIZE_LOG-1;										
+								}			
+						}
+				}
+			printf ("\nIf you want choice another operation, enter '#', else enter any lenght:\n");
+			cin >> choice;
+			if (choice == "#") WHILE = false;
+			else WHILE = true;
+			in.close();
+			in_1.close();			
+		}while(WHILE == false);	
+	return 0;
+}
